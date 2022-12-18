@@ -7,7 +7,7 @@
         event.preventDefault();
         var comment = $('#comment').val()
         var userId = $('#user_id').val();
-        console.log(comment);
+        // console.log(comment);
         if(comment) {
             var requestConfig = {
                 method: 'POST',

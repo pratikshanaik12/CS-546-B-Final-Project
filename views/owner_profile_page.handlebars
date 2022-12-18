@@ -4,8 +4,8 @@ Keep the layout similar to sign-up page
 --}}
 <main>
    <div class="ownerLinks">  
-      <a href="/owners/properties-list" id="ownerElement2">My Properties</a>
-      <a href="/sign-out">Sign-out</a>
+      <a href="/owners/properties-list" class="studentElement2">My Properties</a>
+      <a href="/sign-out" class="studentElement2">Sign-out</a>
    </div>
    <p>{{msg}}</p>
    <form method="POST" id="owner-profile" action="/owners">
@@ -24,7 +24,7 @@ Keep the layout similar to sign-up page
          </div>
       </div>
       <div class="row mb-3">
-         <label for="emailIdInput"class="col-sm-2 col-form-label">
+         <label for="emailIdInput" class="col-sm-2 col-form-label">
          Email:</label>
          <div class="col-sm-3"> 
             <input type="email" class="form-control" id="emailIdInput" name="emailIdInput" value={{data.emailId}}>

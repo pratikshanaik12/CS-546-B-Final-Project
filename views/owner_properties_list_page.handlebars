@@ -1,23 +1,23 @@
 
 <main>
     <div class="ownerLinks">  
-        <a href="/owners" id="ownerElement1">Profile</a>
-        <a href="/sign-out">Sign-out</a>
+        <a href="/owners" class="studentElement2">Profile</a>
+        <a href="/sign-out" class="studentElement2">Sign-out</a>
         <br>
         <br>
     </div> 
 
 
-    <form class="form-search form-inline" action='search' method='GET'>
+    {{!-- <form class="form-search form-inline" action='search' method='GET'>
         <label class="nav-item active" for="search-input"></label>
         <input class="bg-light form-control form-control-sm" name="search-input" type="text" id="search-input" placeholder="Search...">
-    </form>
+    </form> --}}
    
    <div class="properties">    
         {{#each data}}
         <a href="/properties/viewProperty/{{_id}}" class="propertyLink">
             {{#each images}}
-            <img src="{{url}}" width="100" height="100">
+            <img src="{{url}}" alt="Property Image" width="100" height="100">
             {{/each}}
             <p>Address: {{address}}</p>
             <p>Rent: {{rent}} </p>
@@ -28,7 +28,8 @@
         {{/each}}
     </div>
     
-
-    <a href="/properties/createProperty"><input type="button" value="Add Property" class="btn btn-primary"></a>
-
+    <form action="/properties/createProperty" method="get">
+        <label for="Add-Property"></label>
+        <input type="submit" id="Add-Property" value="Add Property" class="btn btn-primary">
+    </form>
 </main>

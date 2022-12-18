@@ -26,11 +26,20 @@ const createUser = async (emailId, password, firstName, lastName, contact, gende
     age=age.trim();
     let hash = await bcrypt.hash(password, saltRounds);
     const ownerCollection = await owners();
-    const user = await ownerCollection.findOne({
+    const userOwner = await ownerCollection.findOne({
       emailId: emailId
     });
-    if(user!=null){
-      if(user.emailId.toLowerCase()===emailId.toLowerCase()){
+    const studentCollection = await students();
+    const userStudent = await studentCollection.findOne({
+      emailId: emailId
+    });
+    if(userOwner!=null){
+      if(userOwner.emailId.toLowerCase()===emailId.toLowerCase()){
+        throw "user with that email already exists";
+      }
+    }
+    if(userStudent!=null){
+      if(userStudent.emailId.toLowerCase()===emailId.toLowerCase()){
         throw "user with that email already exists";
       }
     }

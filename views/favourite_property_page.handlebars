@@ -1,20 +1,13 @@
-{{!-- 
-    This page will be called when the user clicks on a property shown in the properties page.
-    This page will display a single property that the user clicked on.  
-    Also display all the comments that the property has.
-    All the property info is stored in the variable named data. So do data.<whatever you want> eg: data.address, etc.
- --}}
-
-
 <main id="whole-page">
     <h2>Property</h2>
     <div class="studentLinks">  
-        <a href="/properties">Properties</a> <br>
-        <a href="/students/favourites-list" id="studentElement2">My favourites</a> <br>
-        <a href="/sign-out">Sign-out</a>
+        <a href="/properties" class="studentElement2">Properties</a> <br>
+        <a href="/students/favourites-list" class="studentElement2">My favourites</a> <br>
+        <a href="/sign-out" class="studentElement2">Sign-out</a>
         <br>
         <br>
     </div>
+    <h3>{{data.address}}</h3>
     <div>
       <div class="row">
       {{#each data.images}}
@@ -71,7 +64,7 @@
                     
                     <form id="postComment">
                         <div class="bg-light p-2">
-                            <input type="hidden" name="user_id" id="user_id" value="{{data._id}}" />
+                            <input type="hidden" name="user_id" id="user_id" value="{{data._id}}">
                             <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="User Icon" width="40">
                                 <label for="comment"></label>
                                 <textarea id="comment" name="comment" class="form-control ml-1 shadow-none textarea"></textarea>

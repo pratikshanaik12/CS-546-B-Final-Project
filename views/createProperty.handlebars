@@ -1,7 +1,7 @@
 <main>
    <div class="ownerLinks">  
-      <a href="/owners/properties-list" id="ownerElement2">My Properties</a>
-      <a href="/sign-out">Sign-out</a>
+      <a href="/owners/properties-list" class="studentElement2">My Properties</a>
+      <a href="/sign-out" class="studentElement2">Sign-out</a>
    </div>
    <form method="POST" id="createPropertyForm" action="/properties/createProperty" enctype="multipart/form-data">
       <div class="row mb-3">
@@ -89,9 +89,12 @@
       </div>
       <div class="mb-3">
          <input type="submit" value="Create" class="btn btn-primary">
-         <a href="/owners/properties-list"><input type="button" value="Cancel" class="btn btn-danger" aria-label="Cancel"></a>
       </div>
    </form>
+      <form action="/owners/properties-list" method="get">
+         <input type="submit" value="Cancel" class="btn btn-danger">
+      </form>
+
 </main>
 <script src="/public/autoComplete.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8FReQh61YLuQP68YvmQveuU7dY3LVC9w&libraries=places&callback=initAutoComplete" async defer></script>

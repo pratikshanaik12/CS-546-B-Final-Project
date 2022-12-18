@@ -1,4 +1,5 @@
 const mongoCollections = require('../config/mongoCollections');
+const owners = mongoCollections.owners;
 const students = mongoCollections.students;
 const validate = require("../helpers");
 const bcrypt = require('bcryptjs');
@@ -17,12 +18,21 @@ const createUser = async (emailId, password, firstName, lastName, contact, gende
     state=state.trim();
     age=age.trim();
     let hash = await bcrypt.hash(password, saltRounds);
-    const studentCollection = await students();
-    const user = await studentCollection.findOne({
+    const ownerCollection = await owners();
+    const userOwner = await ownerCollection.findOne({
       emailId: emailId
     });
-    if(user!=null){
-      if(user.emailId.toLowerCase()===emailId.toLowerCase()){
+    const studentCollection = await students();
+    const userStudent = await studentCollection.findOne({
+      emailId: emailId
+    });
+    if(userOwner!=null){
+      if(userOwner.emailId.toLowerCase()===emailId.toLowerCase()){
+        throw "user with that email already exists";
+      }
+    }
+    if(userStudent!=null){
+      if(userStudent.emailId.toLowerCase()===emailId.toLowerCase()){
         throw "user with that email already exists";
       }
     }

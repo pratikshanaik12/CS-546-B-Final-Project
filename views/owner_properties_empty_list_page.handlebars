@@ -1,7 +1,10 @@
 <main>
     <div class="ownerLinks">  
-      <a href="/owners/properties-list" id="ownerElement2">My Properties</a>
-      <a href="/sign-out">Sign-out</a>
+      <a href="/owners/properties-list" class="studentElement2">My Properties</a>
+      <a href="/sign-out" class="studentElement2">Sign-out</a>
    </div>
-    <a href="/properties/createProperty"><input type="button" value="Add Property" class="btn btn-primary"></a>
+  <form action="/properties/createProperty" method="get">
+    <label for="Add-property"></label>
+    <input type="submit" id="Add-property" value="Add Property" class="btn btn-primary">
+  </form>
 </main>

@@ -1,16 +1,20 @@
 <main>
    <div class="ownerLinks">  
-      <a href="/owners/properties-list" id="ownerElement2">My Properties</a>
-      <a href="/sign-out">Sign-out</a>
+      <a href="/owners/properties-list" class="studentElement2">My Properties</a>
+      <a href="/sign-out" class="studentElement2">Sign-out</a>
    </div>
+   <h2>{{data.address}}</h2>
    <p>{{msg}}</p>
 
    <div>
       <div class="row">
       {{#each data.images}}
          <div class="col-md-1 text-center">
-            <img src="{{url}}" alt="Property-Image" width="100" height="100">
-            <a href="/properties/deleteImage/{{_id}}"><button type="button" class="btn btn-outline-dark">Delete</button></a>
+            <img src="{{url}}" alt="Property Image" width="100" height="100">
+            <form action="/properties/deleteImage/{{_id}}" method="get">
+            <label for="deleteBtn"></label>
+               <button type="submit" id="deleteBtn" class="btn btn-outline-dark">Delete</button>
+            </form>
          </div>
       {{/each}}
       </div>
@@ -38,7 +42,7 @@
          <label for="description" class="col-sm-2 col-form-label">
          Description:</label>
          <div class="col-sm-3"> 
-            <textarea id="description" class="form-control" name="description" value="{{data.description}}">{{data.description}}</textarea>
+            <input id="description" class="form-control" name="description" value="{{data.description}}">
          </div>
       </div>
 
@@ -106,10 +110,16 @@
 
 
       <input type="submit" class="btn btn-primary" value="Update">
-      <a href="/properties/viewProperty/{{data._id}}"><button type="button" class="btn btn-outline-dark">Cancel</button></a>
-      <a href="/properties/deleteProperty/{{data._id}}"><button type="button" class="btn btn-outline-danger">Delete Property</button></a>
 
    </form>
+      <form action="/properties/viewProperty/{{data._id}}" method="get">
+      <label for="cancelBtn"></label>
+         <button type="submit" id="cancelBtn" class="btn btn-outline-dark">Cancel</button>
+      </form>
+      <form action="/properties/deleteProperty/{{data._id}}" method="get">
+      <label for="DelBtn"></label>
+         <button type="submit" id="DelBtn" class="btn btn-outline-danger">Delete Property</button>
+      </form>
 
  </main>
 

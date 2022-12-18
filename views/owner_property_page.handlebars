@@ -1,16 +1,17 @@
 <main id="whole-page">   
     <h2>Property</h2>
     <div class="ownerLinks">  
-      <a href="/owners/properties-list" id="ownerElement2">My Properties</a>
-      <a href="/sign-out">Sign-out</a>
+      <a href="/owners/properties-list" class="studentElement2">My Properties</a>
+      <a href="/sign-out" class="studentElement2">Sign-out</a>
    </div>
+   <h3>{{data.address}}</h3>
    <p>{{msg}}</p>
 
    <div>
       <div class="row">
       {{#each data.images}}
          <div class="col-md-1 text-center">
-            <img src="{{url}}" alt="Property-Image" width="100" height="100">
+            <img src="{{url}}" alt="Property Image" width="100" height="100">
          </div>
       {{/each}}
       </div>
@@ -68,7 +69,7 @@
 
                     <form id="postComment">
                         <div class="bg-light p-2">
-                            <input type="hidden" name="user_id" id="user_id" value="{{data._id}}" />
+                            <input type="hidden" name="user_id" id="user_id" value="{{data._id}}">
                             <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="User Icon" width="40">
                                 <label for="comment"></label>
                                 <textarea id="comment" name="comment" class="form-control ml-1 shadow-none textarea"></textarea>
