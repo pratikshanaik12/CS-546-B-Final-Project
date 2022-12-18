@@ -93,14 +93,13 @@ const getStudentByEmail = async (emailId) => {
 }
 
 
-const updateStudentDetails = async (emailId, firstName, lastName, contact, gender, city, state, age) => {
+const updateStudentDetails = async (oldEmailId,emailId, firstName, lastName, contact, gender, city, state, age) => {
   // we are using emailid to uniquely identify a user to use that while updating user data
 
-
+  validate.checkEmail(oldEmailId);
   validate.validateUpdate(emailId,firstName,lastName,contact,gender,city,state,age);
-  //validate.validateRegistration(emailId,password,firstName,lastName,contact,gender,city,state,age);
+
   emailId=emailId.trim().toLowerCase();
- // password=password.trim();
 
   firstName=firstName.trim();
   lastName=lastName.trim();
@@ -112,7 +111,7 @@ const updateStudentDetails = async (emailId, firstName, lastName, contact, gende
 
   //let hash = await bcrypt.hash(password, saltRounds);
 
-  let oldStudent = await getStudentByEmail(emailId);
+  let oldStudent = await getStudentByEmail(oldEmailId);
   let favourites = oldStudent.favourites;
 
   const updatedStudent = {
@@ -133,7 +132,7 @@ const updateStudentDetails = async (emailId, firstName, lastName, contact, gende
   
   const studentCollection = await students();
   const updatedInfo = await studentCollection.updateOne(
-    {emailId: emailId},
+    {emailId: oldEmailId},
     {$set: updatedStudent}
   );
 

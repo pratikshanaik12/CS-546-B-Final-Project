@@ -18,7 +18,7 @@ const constructorMethod = (app) => {
       res.redirect('/sign-in');
     }
     else { 
-      return res.status(404).render('./error_page', {title: "Error", error: "Oops! the page you are searching doesn't exist"});
+      return res.status(404).render('./error_page', {title: "Error", error1: "Oops! the page you are searching doesn't exist"});
     }
   });
 };

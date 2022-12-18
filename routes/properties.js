@@ -18,7 +18,7 @@ router.route('/')
             res.render('./properties_page', {title: "All Properties",head:"All Properties", data: data, style: "/public/properties_page_style.css"});
         }
     }catch(e) {
-        return res.status(500).render('./error_page', {title: "Error", error: e});
+        return res.status(500).render('./error_page', {title: "Error", error1: e});
     }
 })
 
@@ -44,7 +44,7 @@ router.route('/filter/:id')
             res.render('./properties_page', {title: "All Properties",head:"All Properties", data: data, style: "/public/properties_page_style.css"});
         }
     }catch(e) {
-        return res.status(500).render('./error_page', {title: "Error", error: e});
+        return res.status(500).render('./error_page', {title: "Error", error1: e});
     }
 })
 
@@ -67,7 +67,7 @@ router.route('/property/:id')
             }
         }
     }catch(e) {
-        return res.status(404).render('./error_page', {title: "Error", error: e});
+        return res.status(404).render('./error_page', {title: "Error", error1: e});
     }
 })
 
@@ -94,7 +94,7 @@ router.route('/property/comments/:id')
             }
         }
     }catch(e) {
-        return res.status(404).render('./error_page', {title: "Error", error: e});
+        return res.status(404).render('./error_page', {title: "Error", error1: e});
     }
 })
 
@@ -138,7 +138,7 @@ router.route('/createProperty')
             res.redirect('/');
         }
     }catch(e) {
-        return res.status(404).render('./error_page', {title: "Error", error: e});
+        return res.status(404).render('./error_page', {title: "Error", error1: e});
     }
 })
 
@@ -156,7 +156,7 @@ router.route('/viewProperty/:id')
             return res.render('./owner_property_page', {title: "Property", data: data});
         }
     }catch(e) {
-        return res.status(404).render('./error_page', {title: "Error", error: e});
+        return res.status(404).render('./error_page', {title: "Error", error1: e});
     }
 })
 
@@ -174,7 +174,7 @@ router.route('/editProperty/:id')
             return res.render('./owner_property_edit', {title: "EditProperty",head:"Edit Property", data: data});
         }
     }catch(e) {
-        return res.status(404).render('./error_page', {title: "Error", error: e});
+        return res.status(404).render('./error_page', {title: "Error", error1: e});
     }
 })
 .post(upload.array('images'),async (req, res) => {
@@ -208,7 +208,7 @@ router.route('/editProperty/:id')
         let data = await index.properties.getPropertyById(id);
         res.render('./owner_property_edit', {title: "EditProperty",head:"Edit Property", data: data, msg: "Update successful"});
     }catch(e) {
-        return res.status(404).render('./error_page', {title: "Error", error: e});
+        return res.status(404).render('./error_page', {title: "Error", error1: e});
     }
 })
 
@@ -225,7 +225,7 @@ router.route('/deleteProperty/:id')
             res.redirect('/owners/properties-list')
         }
     }catch(e) {
-        return res.status(404).render('./error_page', {title: "Error", error: e});
+        return res.status(404).render('./error_page', {title: "Error", error1: e});
     }
 })
 
@@ -242,7 +242,7 @@ router.route('/deleteImage/:id')
             res.redirect('/properties/editProperty/'+propId);
         }
     }catch(e) {
-        return res.status(404).render('./error_page', {title: "Error", error: e});
+        return res.status(404).render('./error_page', {title: "Error", error1: e});
     }
 })
 

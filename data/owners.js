@@ -98,8 +98,9 @@ const getOwnerByEmail = async (emailId) => {
     return owner;
 }
 
-const updateOwnerDetails = async (emailId, firstName, lastName, contact, gender, city, state, age) => {
+const updateOwnerDetails = async (oldEmailId,emailId, firstName, lastName, contact, gender, city, state, age) => {
     // we are using emailid to uniquely identify a user to use that while updating user data
+    validate,validate.checkEmail(oldEmailId);
     validate.validateUpdate(emailId,firstName,lastName,contact,gender,city,state,age);
     emailId=emailId.trim().toLowerCase();
     firstName=firstName.trim();
@@ -110,8 +111,8 @@ const updateOwnerDetails = async (emailId, firstName, lastName, contact, gender,
     state=state.trim();
     age=age.trim();
 
-    let oldOwner = await getOwnerByEmail(emailId);
-    let properties = oldOwner.properties;
+    let oldOwner = await getOwnerByEmail(oldEmailId);
+    let propertiesArr = oldOwner.properties;
     
     let ownerUpdateInfo = {
       emailId: emailId,
@@ -123,18 +124,35 @@ const updateOwnerDetails = async (emailId, firstName, lastName, contact, gender,
       city: city,
       state: state,
       age: age,
-      properties: properties
+      properties: propertiesArr
   }
 
   const ownerCollection = await owners();
   const ownerUpdatedInfo = await ownerCollection.updateOne(
-    {emailId: emailId},
+    {emailId: oldEmailId},
     {$set: ownerUpdateInfo}
   );
 
   if (ownerUpdatedInfo.modifiedCount === 0) {
     throw 'Could not update the owner profile';
   }
+
+  const updateProperty={
+    listedBy:firstName,
+    emailId:emailId
+  }
+
+  const propertyCollection = await properties();
+  propertiesArr.forEach(async id => {
+    const propertyUpdatedInfo = await propertyCollection.updateOne(
+      {_id: ObjectId(id)},
+      {$set: updateProperty}
+    );
+
+    if (propertyUpdatedInfo.modifiedCount === 0) {
+      throw 'could not update the property';
+    }
+  });
 
   return await getOwnerByEmail(emailId);
 
@@ -169,6 +187,9 @@ const editProp = async (id,images, address, description, laundry, rent, listedBy
     
   let imageBuffer=[];
   let result;
+
+  // https://youtu.be/GEE0jNxC8Gw
+
   if(images.length>0){
     for(let i=0;i<images.length;i++){
         result = await cloudinary.uploader.upload(images[i],{
