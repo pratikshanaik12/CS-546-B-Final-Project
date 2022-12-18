@@ -36,12 +36,13 @@ router.route('/')
         gender=gender.trim();
         city=city.trim();
         state=state.trim();
-        age=age.trim(); 
-        let data = await index.student.updateStudentDetails(emailId, firstName, lastName, contact, gender, city, state, age);
+        age=age.trim();
+        let oldEmailId = req.session.user.emailId;
+        let userType = req.session.user.userType
+        let data = await index.student.updateStudentDetails(oldEmailId,emailId, firstName, lastName, contact, gender, city, state, age);
 
-        
-        req.session.user = {emailId: emailId, userType: 'student', firstName:firstName};
-        //let data = await index.student.getStudentByEmail(emailId); 
+        req.session.user = {emailId: emailId, userType: userType, firstName:firstName,lastName:lastName};
+
         return res.render('./student_profile_page', {title: "Profile",head:"Profile", data: data, msg: "Profile updated successfully"});
     }catch(e) {
         let data = await index.student.getStudentByEmail(xss(req.body.emailIdInput)); 
@@ -69,16 +70,6 @@ router.route('/favourites-list')
         }
     }
 });
-//  .post(async (req, res) => {
-//     try{
-//         await index.student.addFavouriteProperty(req.session.user.emailId, req.params.id);
-//         console.log('Added to favs!');
-//     } catch(e) {
-//         console.log('not added to favs');
-//         return res.status(404).render('./error_page', {title: "Error", error: e});
-
-//     }
-//  })
 
 router.post('/favourites-list/:id', 
     async(req, res) => {
@@ -90,7 +81,7 @@ router.post('/favourites-list/:id',
 
         } catch(e) {
             // console.log('not added to favs');
-            return res.status(404).render('./error_page', {title: "Error", error: e});
+            return res.status(404).render('./error_page', {title: "Error", error1: e});
 
         }
     }
@@ -107,7 +98,7 @@ router.post('/remove-favourites-list/:id',
 
         } catch(e) {
             // console.log('not added to favs');
-            return res.status(404).render('./error_page', {title: "Error", error: e});
+            return res.status(404).render('./error_page', {title: "Error", error1: e});
 
         }
     }
