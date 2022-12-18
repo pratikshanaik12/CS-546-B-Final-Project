@@ -2,11 +2,16 @@
 
     <div class="studentLinks">
         <a href="/students" id="studentElement1">Profile </a> <br>
+        <a href="/properties">Properties</a> <br>
         <a href="/sign-out">Sign-out </a>
-        <br><br>
+        <br>
     </div>
     
-
+    <form class="form-search form-inline" action='search' method='GET'>
+        <label class="nav-item active" for="search-input"></label>
+        <input class="bg-light form-control form-control-sm" name="search-input" type="text" id="search-input" placeholder="Search...">
+    </form>
+    <br>
     <div class="properties">    
         {{#each data}}
         <a href="/properties/property/{{_id}}" class="propertyLink">
@@ -27,8 +32,4 @@
         {{/each}}
 
     </div>
-    <form class="form-search form-inline" action='search' method='GET'>
-        <label class="nav-item active" for="search-input"></label>
-        <input class="bg-light form-control form-control-sm" name="search-input" type="text" id="search-input" placeholder="Search...">
-    </form>
 </main>

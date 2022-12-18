@@ -2,6 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const students = mongoCollections.students;
 const validate = require("../helpers");
 const bcrypt = require('bcryptjs');
+const { ObjectId } = require("mongodb");
 const saltRounds = 10;
 
 const createUser = async (emailId, password, firstName, lastName, contact, gender, city, state, age) => {
@@ -150,17 +151,11 @@ const addFavouriteProperty = async(emailId, id) =>{
   validate.validateEmail(emailId);
   const studentCollection = await students();
 
-  // var elem = document.getElementById('addFavourites');
- 
+  //if fav already exists, show alert
   let studentData = await studentCollection.findOne({emailId: emailId});
   if(studentData.favourites.includes(id)){
-    //elem.value = 'Added!'
     throw 'Property already exists in favourites!';
   }
-
-  //  if (elem.value=="Added!") elem.value = "Add to favourites";
-  // else elem.value = "Added!";
-
   const favouritesInfo = await studentCollection.updateOne({emailId: emailId}, {$push: {favourites: id}});
 
   if (favouritesInfo.modifiedCount === 0) {
@@ -184,6 +179,34 @@ const removeFavouriteProperty = async(emailId, id) =>{
   return await getStudentByEmail(emailId);
 };
 
+const removeFavouritePropertiesById = async(id) =>{
+
+  const studentCollection = await students();
+
+  await studentCollection.updateOne({$pull: {favourites: id}});
+
+  if (favouritesInfo.modifiedCount === 0) {
+    throw 'Could not remove from Student favourite properties';
+  }
+
+  return {deleted: true};
+};
+
+const checkFavourite=async(id,emailId)=>{
+  validate.checkId(id);
+  id=id.toString().trim();
+  validate.checkEmail(emailId);
+  emailId=emailId.toString().trim();
+  const stu = await getStudentByEmail(emailId);
+  let fav=false;
+  stu.favourites.forEach(element => {
+    if(element===id){
+      fav = true;
+    }
+  });
+  return fav;
+}
+
 module.exports = {
     checkUser,
     createUser,
@@ -192,5 +215,7 @@ module.exports = {
     updateStudentDetails,
     deleteStudent,
     addFavouriteProperty,
-    removeFavouriteProperty
+    removeFavouriteProperty,
+    checkFavourite,
+    removeFavouritePropertiesById
 }

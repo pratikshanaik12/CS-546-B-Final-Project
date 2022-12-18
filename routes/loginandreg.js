@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const index = require('../data/index');
-
+const xss = require('xss');
 const validate = require("../helpers");
 
 router.route('/')
@@ -24,7 +24,7 @@ router.route('/')
 router.route('/sign-in')
 .get(async (req, res) => {
     if (!req.session.user) {
-        return res.render('./sign-in_page', {title: "Sign-in Page"});
+        return res.render('./sign-in_page', {title: "HomeFinder",head:"HomeFinder"});
     } 
     else {
         if(req.session.user.userType=='student'){
@@ -39,9 +39,9 @@ router.route('/sign-in')
 })
 .post(async (req, res) => {
     try {
-        let emailId = req.body.emailIdInput;
-        let password = req.body.passwordInput;
-        let userType = req.body.userType;
+        let emailId = xss(req.body.emailIdInput);
+        let password = xss(req.body.passwordInput);
+        let userType = xss(req.body.userType);
         validate.validateUser(emailId, password);
         emailId = emailId.trim().toLowerCase();
         let user;
@@ -51,9 +51,9 @@ router.route('/sign-in')
         else{
             user = await index.student.checkUser(emailId, password);
         }
-        req.session.user = {emailId: emailId, userType: userType, firstName:user.firstName};
+        req.session.user = {emailId: emailId, userType: userType, firstName:user.firstName,lastName:user.lastName};
         if(req.session.user.userType=='student'){
-        res.redirect('/properties');
+            res.redirect('/properties');
         }
         else{
             res.redirect('/owners/properties-list');
@@ -66,7 +66,7 @@ router.route('/sign-in')
 router.route('/sign-up')
 .get(async (req, res) => {
     if (!req.session.user) {
-        return res.render('./sign-up_page', {title: "Sign-up Form"});
+        return res.render('./sign-up_page', {title: "HomeFinder",head:"HomeFinder"});
     } 
     else {
         if(req.session.user.userType=='student'){
@@ -81,16 +81,16 @@ router.route('/sign-up')
 })
 .post(async (req, res) => {
     try {
-        let emailId = req.body.emailIdInput;
-        let password = req.body.passwordInput;
-        let firstName = req.body.firstName;
-        let lastName = req.body.lastName;
-        let contact = req.body.contact;
-        let gender = req.body.gender;
-        let city = req.body.city;
-        let state = req.body.state;
-        let age = req.body.age;
-        let userType = req.body.userType; 
+        let emailId = xss(req.body.emailIdInput);
+        let password = xss(req.body.passwordInput);
+        let firstName = xss(req.body.firstName);
+        let lastName = xss(req.body.lastName);
+        let contact = xss(req.body.contact);
+        let gender = xss(req.body.gender);
+        let city = xss(req.body.city);
+        let state = xss(req.body.state);
+        let age = xss(req.body.age);
+        let userType = xss(req.body.userType); 
         validate.validateRegistration(emailId, password, firstName, lastName, contact, gender, city, state, age);
         if(userType == 'owner') await index.owner.createUser(emailId, password, firstName, lastName, contact, gender, city, state, age);
         else await index.student.createUser(emailId, password, firstName, lastName, contact, gender, city, state, age);
@@ -104,7 +104,7 @@ router.route('/sign-out')
 .get(async (req, res) => {
     req.session.destroy();
     res.clearCookie('AuthCookie');
-    return res.render('./logout_page', {title: "Logout Successful"});
+    return res.render('./logout_page', {title: "Logout Successful",head:"Logout Successful"});
 })
 
 

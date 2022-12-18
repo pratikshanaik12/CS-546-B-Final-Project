@@ -1,11 +1,14 @@
 const mongoCollections = require('../config/mongoCollections');
 const propertyData = require('./properties');
+//const studentData = require('./students');
 const properties = mongoCollections.properties;
 const owners = mongoCollections.owners;
+const students = mongoCollections.students;
 const validate = require("../helpers");
 const bcrypt = require('bcryptjs');
 const cloudinary = require('../config/cloudinary');
 const { ObjectId } = require('mongodb');
+const axios = require('axios');
 require("dotenv/config");
 //const { properties } = require('../config/mongoCollections');
 const saltRounds = 10;
@@ -131,7 +134,16 @@ const updateOwnerDetails = async (emailId, firstName, lastName, contact, gender,
 const deleteOwner = async (emailId) => {
 
   validate.validateEmail(emailId);
+
   const ownerCollection = await owners();
+
+  let owner = await getOwnerByEmail(emailId);
+  let ownerProp = owner.properties;
+
+  for(i=0;i<ownerProp.length;i++){
+    await propertyData.removeProperty(ownerProp[i], emailId);
+  }
+
   const removeInfo = await ownerCollection.deleteOne({emailId: emailId});
 
   if (removeInfo.deletedCount === 0) {
@@ -144,23 +156,25 @@ const deleteOwner = async (emailId) => {
 
 const editProp = async (id,images, address, description, laundry, rent, listedBy, emailId, area, bed, bath) => {
   validate.checkId(id);
-  // validate.validateProperty(address,description,laundry,rent,listedBy,emailId,area,bed,bath);
+  validate.validateProperty(address,description,laundry,rent,listedBy,emailId,area,bed,bath);
     
   let imageBuffer=[];
-  // let result;
-  // for(let i=0;i<images.length;i++){
-  //     result = await cloudinary.uploader.upload(images[i],{
-  //         //uploaded images are stored in sanjan's cloudinary account under uploads folder
-  //         folder: "uploads",
-  //         //width and crop to alter image size, not needed right now, will uncomment if needed in future
-  //         // width:300,
-  //         // crop:"scale"
-  //     });
-  //     imageBuffer.push({
-  //         _id: new ObjectId(),
-  //         url: result.secure_url
-  //     })
-  // };
+  let result;
+  if(images.length>0){
+    for(let i=0;i<images.length;i++){
+        result = await cloudinary.uploader.upload(images[i],{
+            //uploaded images are stored in sanjan's cloudinary account under uploads folder
+            folder: "uploads",
+            //width and crop to alter image size, not needed right now, will uncomment if needed in future
+            // width:300,
+            // crop:"scale"
+        });
+        imageBuffer.push({
+            _id: new ObjectId(),
+            url: result.secure_url
+        })
+    };
+  }
 
   address=address.trim()
   description=description.trim()

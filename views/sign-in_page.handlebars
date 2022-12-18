@@ -1,35 +1,68 @@
 <main>
-   <form method="POST" id="signin-form" action="/sign-in">
-      <div class="row mb-3">
-         <label for="emailIdInput" class="col-sm-2 col-form-label">Email</label>
-         <div class="col-sm-3">
-            <input type="email" class="form-control" id="emailIdInput" name="emailIdInput" placeholder="Enter a valid email id">
-         </div>
+   <div class="row">
+      <div class="col-md-6">
+         <h2>Welcome to HomeFinder Website.</h2>
+         <p>we have developed this website to help International Students relocating to a new place in the United States.</p>
+         
+         <h3>Students can</h3>
+         <ul>
+            <li>Create, Update and Delete their profile</li>
+            <li>view all the Properties listed in our website.</li>
+            <li>view any specific Property and all of its Details.</li>
+            <li>use the filter to select the number of Bed & Bath.</li>
+            <li>add and remove a Property from thier Favourites List</li>
+            <li>use the Search Box feature to find Keyword matching Properties.</li>
+            <li>Interact with the Property Owner using the Comment Box feature.</li>
+            <li>use the filters to sort Properties by Rent, Sort Properties by Distance to University </li>
+         </ul>
+         <h3>Owners can</h3>
+         <ul>
+            <li>Create, Update and Delete their profile.</li>
+            <li>Create, Update and Delete their Properties.</li>
+            <li>view all the Properties listed by them or view specific Properties.</li>
+            <li>Interact with Students using the Comment Box feature.</li>
+         </ul>
       </div>
-      <div class="row mb-3">
-         <label for="passwordInput" class="col-sm-2 col-form-label">Password</label>
-         <div class="col-sm-3">
-            <input type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="Enter a valid password">
-         </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-5">
+         <h2>Sign-in</h2>
+         <form method="POST" id="signin-form" action="/sign-in">
+            <div class="row mb-3">
+               <label for="emailIdInput" class="col-sm-2 col-form-label">Email</label>
+               <div class="col-sm-6">
+                  <input type="email" class="form-control" id="emailIdInput" name="emailIdInput" placeholder="Enter a valid email id">
+               </div>
+               <div id="no-email" hidden>Please enter your email</div>
+            </div>
+            <div class="row mb-3">
+               <label for="passwordInput" class="col-sm-2 col-form-label">Password</label>
+               <div class="col-sm-6">
+                  <input type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="Enter a valid password">
+               </div>
+               <div id="no-password" hidden>Please enter your password</div>
+            </div>
+            <fieldset class="row mb-3">
+               <legend class="col-form-label col-sm-2 pt-0">Are you a Student or Owner</legend>
+               <div class="col-sm-6">
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" id = "student" name = "userType" value="student">
+                     <label class="form-check-label" for="student">
+                     Student
+                     </label>
+                  </div>
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="userType" id="owner" value="owner">
+                     <label class="form-check-label" for="owner">
+                     Owner
+                     </label>
+                  </div>
+                  <div id="no-type" hidden>Please select one of the user type</div>
+               </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Sign in</button>
+         </form>
+         <a href="/sign-up">Click here to Register!</a>
       </div>
-      <fieldset class="row mb-3">
-         <legend class="col-form-label col-sm-2 pt-0">Are you a Student or Owner</legend>
-         <div class="col-sm-3">
-            <div class="form-check">
-               <input class="form-check-input" type="radio" id = "student" name = "userType" value="student">
-               <label class="form-check-label" for="student">
-               Student
-               </label>
-            </div>
-            <div class="form-check">
-               <input class="form-check-input" type="radio" name="userType" id="owner" value="owner">
-               <label class="form-check-label" for="owner">
-               Owner
-               </label>
-            </div>
-         </div>
-      </fieldset>
-      <button type="submit" class="btn btn-primary">Sign in</button>
-   </form>
-   <a href="/sign-up">Click here to Register!</a>
+   </div>
 </main>
+<script src="/public/signin.js"></script>

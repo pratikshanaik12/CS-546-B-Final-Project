@@ -1,5 +1,12 @@
 <main>
-    <form method="GET" action="javascript:history.back()">
+    <div class="studentLinks">  
+        <a href="/properties">Properties</a> <br>
+        {{!-- <a href="/students/favourites-list" id="studentElement2">My favourites</a> <br> --}}
+        <a href="/sign-out">Sign-out</a>
+        <br>
+        <br>
+    </div>
+    <form method="GET" action="/properties/">
         <input type="submit" value="Start adding favourites" />
     </form>
 </main>

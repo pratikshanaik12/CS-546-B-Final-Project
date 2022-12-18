@@ -1,13 +1,12 @@
-<main id="whole-page">
+<main id="whole-page">   
     <h2>Property</h2>
-    <div class="studentLinks">  
-        <a href="/properties">Properties</a> <br>
-        <a href="/students/favourites-list" id="studentElement2">My favourites</a> <br>
-        <a href="/sign-out">Sign-out</a>
-        <br>
-        <br>
-    </div>
-    <div>
+    <div class="ownerLinks">  
+      <a href="/owners/properties-list" id="ownerElement2">My Properties</a>
+      <a href="/sign-out">Sign-out</a>
+   </div>
+   <p>{{msg}}</p>
+
+   <div>
       <div class="row">
       {{#each data.images}}
          <div class="col-md-1 text-center">
@@ -16,6 +15,7 @@
       {{/each}}
       </div>
    </div>
+   
     <dl>
         <dt>Address:</dt>
         <dd>{{data.address}}</dd>
@@ -27,7 +27,7 @@
         <dd>{{data.laundry}}</dd>
 
         <dt>Rent:</dt>
-        <dd>{{data.rent}}</dd>
+        <dd>${{data.rent}}</dd>
 
         <dt>Listed By:</dt>
         <dd>{{data.listedBy}}</dd>
@@ -36,20 +36,25 @@
         <dd>{{data.emailId}}</dd>
 
         <dt>Area:</dt>
-        <dd>{{data.area}}</dd>
+        <dd>{{data.area}}sqft</dd>
 
         <dt>Bed:</dt>
-        <dd>{{data.bed}}</dd>
+        <dd>{{data.bed}} Bedroom</dd>
 
         <dt>Bath:</dt>
-        <dd>{{data.bath}}</dd>
+        <dd>{{data.bath}} Bathroom</dd>
     </dl>
+
+    <form action="/properties/editProperty/{{data._id}}" method="get">
+        <label for="updatePropBtn"></label>
+        <button type="submit" id="updatePropBtn" class="btn btn-primary">Update Property</button>
+    </form>
 
     <div class="mt-5">
       <h2>Comment Section</h2>
         <div class="d-flex row">
             <div class="col-md-8">
-                <div class="d-flex flex-column comment-section" id="new-comments">
+                <div class="d-flex flex-column comment-section">
                     {{#each data.comments}}
                     <div class="bg-white p-2">
                         <div class="d-flex flex-row user-info"><img class="rounded-circle" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="User Icon" width="40">
@@ -60,7 +65,7 @@
                         </div>
                     </div>
                     {{/each}}
-                    
+
                     <form id="postComment">
                         <div class="bg-light p-2">
                             <input type="hidden" name="user_id" id="user_id" value="{{data._id}}" />
@@ -82,12 +87,4 @@
     </div>
 <br>
 
-   <form id="addToFavourites" method="POST" action="/students/favourites-list/{{id}}">
-        <button class="FavouriteButton" id ="favouritesButton" type="submit"> Add to favorites </button>
-    </form>
-
-    <br> 
-    <a href="/properties/">Make another search</a>
-
 </main>
-<script src="/public/extra.js"></script>

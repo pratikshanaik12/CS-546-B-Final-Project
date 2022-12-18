@@ -10,7 +10,7 @@ function validateRegistration(email,password,firstName,lastName,contact,gender,c
     if(email.trim().length==0 || password.trim().length==0|| firstName.trim().length==0|| lastName.trim().length==0|| contact.trim().length==0|| gender.trim().length==0|| city.trim().length==0|| state.trim().length==0|| age.trim().length==0){
       throw "Input cannot be Empty spaces";
     }
-    if(!((/^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
+    if(!((/^[a-zA-Z]+[0-9a-zA-Z_-]*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
       throw "Invalid email";
     }
     if(!((/^(?=.*[0-9])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.* ).{6,}$/).test(password))){
@@ -28,14 +28,18 @@ function validateRegistration(email,password,firstName,lastName,contact,gender,c
     if(!((/^(M|F)$/).test(gender.trim()))){
         throw "only letters in gender";
     }
-    if(!((/^[a-zA-Z]{4,}$/).test(city.trim()))){
+    if(!((/^[a-zA-Z ]{4,}$/).test(city.trim()))){
         throw "only letters in city, min four characters";
     }
-    if(!((/^[a-zA-Z]{2,}$/).test(state.trim()))){
-        throw "only letters in state, min two characters";
+    if(!((/^[a-zA-Z ]{2,}[, \.a-zA-z]*$/).test(state.trim()))){
+        throw "only letters, spaces, comma and dot in state, min two characters";
     }
     if(!((/^[0-9][0-9]$/).test(age.trim()))){
         throw "only numbers in age, two characters";
+    }
+    age = Number(age);
+    if(age<18 || age>99){
+        throw "Age out of bounds."
     }
 }
 
@@ -49,7 +53,7 @@ function validateUser(email,password) {
     if(email.trim().length==0 || password.trim().length==0){
         throw "Input cannot be Empty spaces";
     }
-    if(!((/^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
+    if(!((/^[a-zA-Z]+[0-9a-zA-Z_-]*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
         throw "Invalid email";
     }
     if(!((/^(?=.*[0-9])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.* ).{6,}$/).test(password))){
@@ -67,7 +71,7 @@ function validateEmail(email) {
     if(email.trim().length==0){
         throw "Input cannot be Empty spaces";
     }
-    if(!((/^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
+    if(!((/^[a-zA-Z]+[0-9a-zA-Z_-]*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
         throw "Invalid email";
     }
 }
@@ -125,7 +129,7 @@ function validateProperty(address,description,laundry,rent,listedBy,email,area,b
     if(bath<=0 || bath>10){
         throw "Error : bath out of bounds";
     }
-    if(!((/^[0-9]{1,6}[a-zA-Z, ]+[0-9]*$/).test(address))){
+    if(!((/^[0-9]{1,6}[a-zA-Z, \.]+[0-9]*[a-zA-Z, \.]*$/).test(address))){
         throw "Error : Invalid address";
     }
     if(!((/^[a-zA-Z0-9 ,\.]+$/).test(description))){
@@ -137,7 +141,7 @@ function validateProperty(address,description,laundry,rent,listedBy,email,area,b
     if(!((/^[a-zA-Z ]+$/).test(listedBy))){
         throw "Error : Invalid lister";
     }
-    if(!((/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/).test(email.trim()))){
+    if(!((/^[a-zA-Z]+[0-9a-zA-Z_-]*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
         throw "Invalid email";
     }
 }
@@ -176,7 +180,7 @@ function validateUpdate(email,firstName,lastName,contact,gender,city,state,age) 
     if(email.trim().length==0 || firstName.trim().length==0|| lastName.trim().length==0|| contact.trim().length==0|| gender.trim().length==0|| city.trim().length==0|| state.trim().length==0|| age.trim().length==0){
       throw "Input cannot be Empty spaces";
     }
-    if(!((/^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
+    if(!((/^[a-zA-Z]+[0-9a-zA-Z_-]*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
       throw "Invalid email";
     }
     if(!((/^[a-zA-Z]{2,}$/).test(firstName.trim()))){
@@ -199,6 +203,10 @@ function validateUpdate(email,firstName,lastName,contact,gender,city,state,age) 
     }
     if(!((/^[0-9][0-9]$/).test(age.trim()))){
         throw "only numbers in age, two characters";
+    }
+    age = Number(age);
+    if(age<18 || age>99){
+        throw "Age out of bounds."
     }
 }
 
@@ -232,6 +240,41 @@ function getDistanceFromLatLonInMi(lat1, lon1, lat2, lon2) {
     }
 //
 
+function checkEmail(email){
+    if(!email){
+        throw "Input not provided";
+      }
+      if(typeof email!=='string'){
+        throw "Input must be string";
+      }
+      if(email.trim().length==0){
+        throw "Input cannot be Empty spaces";
+      }
+      if(!((/^[a-zA-Z]+[0-9a-zA-Z_-]*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/).test(email.trim()))){
+        throw "Invalid email";
+      }
+      return email.trim();
+}
+
+function validateFullName(firstName,lastName){
+    if(!lastName ||!firstName){
+        throw "Input not provided";
+    }
+    if(typeof firstName!=='string'|| typeof lastName!=='string'){
+        throw "Input must be string";
+    }
+    if(firstName.trim().length==0|| lastName.trim().length==0){
+        throw "Input cannot be Empty spaces";
+    }
+    if(!((/^[a-zA-Z]{2,}$/).test(firstName.trim()))){
+        throw "only letters in firstname, min two characters";
+    }
+    if(!((/^[a-zA-Z]{2,}$/).test(lastName.trim()))){
+        throw "only letters in lastname, min two characters";
+    }
+    return firstName+" "+lastName;
+}
+
 module.exports = {
     validateRegistration,
     validateUser,
@@ -241,6 +284,8 @@ module.exports = {
     checkComment,
     validateUpdate,
     validateArray,
-    getDistanceFromLatLonInMi
+    getDistanceFromLatLonInMi,
+    checkEmail,
+    validateFullName
 }
 

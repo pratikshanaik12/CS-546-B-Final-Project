@@ -1,3 +1,11 @@
+{{!-- 
+    This page will be called when the user clicks on a property shown in the properties page.
+    This page will display a single property that the user clicked on.  
+    Also display all the comments that the property has.
+    All the property info is stored in the variable named data. So do data.<whatever you want> eg: data.address, etc.
+ --}}
+
+
 <main id="whole-page">
     <h2>Property</h2>
     <div class="studentLinks">  
@@ -82,8 +90,8 @@
     </div>
 <br>
 
-   <form id="addToFavourites" method="POST" action="/students/favourites-list/{{id}}">
-        <button class="FavouriteButton" id ="favouritesButton" type="submit"> Add to favorites </button>
+    <form id="RemoveFromFavourites" method="POST" action="/students/remove-favourites-list/{{id}}">
+        <button class="FavouriteButton" id ="removeFavouritesButton" type="submit"> Remove From favorites </button>
     </form>
 
     <br> 

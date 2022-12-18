@@ -37,3 +37,9 @@ function favourites()
 // }
 
 //module.exports = favourites;
+
+let commentForm = document.getElementById('postComment');
+let cancelButton = document.getElementById('cancelButton');
+cancelButton.addEventListener("click",(event)=>{
+    commentForm.reset();
+});

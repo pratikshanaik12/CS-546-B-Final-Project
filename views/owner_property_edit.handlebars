@@ -1,8 +1,22 @@
 <main>
-
+   <div class="ownerLinks">  
+      <a href="/owners/properties-list" id="ownerElement2">My Properties</a>
+      <a href="/sign-out">Sign-out</a>
+   </div>
    <p>{{msg}}</p>
 
-   <form method="POST" action="/properties/editProperty/{{data._id}}">
+   <div>
+      <div class="row">
+      {{#each data.images}}
+         <div class="col-md-1 text-center">
+            <img src="{{url}}" alt="Property-Image" width="100" height="100">
+            <a href="/properties/deleteImage/{{_id}}"><button type="button" class="btn btn-outline-dark">Delete</button></a>
+         </div>
+      {{/each}}
+      </div>
+   </div>
+   <br>
+   <form method="POST" action="/properties/editProperty/{{data._id}}" enctype="multipart/form-data">
    
       <div class="row mb-3">
          <label for="images" class="col-sm-2 col-form-label">
@@ -24,7 +38,7 @@
          <label for="description" class="col-sm-2 col-form-label">
          Description:</label>
          <div class="col-sm-3"> 
-            <input type="text" id="description" class="form-control" name="description" value="{{data.description}}">
+            <textarea id="description" class="form-control" name="description" value="{{data.description}}">{{data.description}}</textarea>
          </div>
       </div>
 
@@ -32,7 +46,12 @@
          <label for="laundry" class="col-sm-2 col-form-label">
          Laundry:</label>
          <div class="col-sm-3">
-         <input type="text" class="form-control" id="laundry" name="laundry" value="{{data.laundry}}">
+            <select id="laundry" class="form-control" name="laundry">
+               <option value="{{data.laundry}}">{{data.laundry}}</option>
+               <option value="Not-Included">Not-Included</option>
+               <option value="In-Unit">In-Unit</option>
+               <option value="Community">Community</option>
+            </select>
          </div>
       </div>
 
@@ -42,22 +61,6 @@
          Rent:</label>
          <div class="col-sm-3"> 
             <input type="number" class="form-control" id="rent" name="rent" value="{{data.rent}}">
-         </div>
-      </div>
-
-      <div class="row mb-3">
-         <label for="listedBy" class="col-sm-2 col-form-label">
-         Listed By:</label>
-         <div class="col-sm-3">
-         <input type="text" class="form-control" id="listedBy" name="listedBy" value="{{data.listedBy}}">
-         </div>
-      </div>
-      
-      <div class="row mb-3">
-         <label for="emailId" class="col-sm-2 col-form-label">
-         Email Id:</label>
-         <div class="col-sm-3">
-         <input type="email" class="form-control" id="emailId" name="emailId" value="{{data.emailId}}">
          </div>
       </div>
 
@@ -73,7 +76,15 @@
          <label for="bed" class="col-sm-2 col-form-label">
          Bed:</label>
          <div class="col-sm-3">
-         <input type="number" class="form-control" id="bed" name="bed" value="{{data.bed}}">
+            <select id = "bed" class="form-control" name = "bed">
+               <option value="{{data.bed}}">{{data.bed}}</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+               <option value="6">6</option>
+            </select>
          </div>
       </div>
       
@@ -81,20 +92,27 @@
       <label for="bath" class="col-sm-2 col-form-label">
          Bath:</label>
          <div class="col-sm-3">
-         <input type="number" class="form-control" id="bath" name="bath" value="{{data.bath}}">
+            <select id = "bath" class="form-control" name = "bath">
+               <option value="{{data.bath}}">{{data.bath}}</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+               <option value="6">6</option>
+            </select>
          </div>
       </div>
 
 
       <input type="submit" class="btn btn-primary" value="Update">
+      <a href="/properties/viewProperty/{{data._id}}"><button type="button" class="btn btn-outline-dark">Cancel</button></a>
+      <a href="/properties/deleteProperty/{{data._id}}"><button type="button" class="btn btn-outline-danger">Delete Property</button></a>
 
-   </form>
-   <br>
-   <form method="POST" id="delete-btn" action="/properties/deleteProperty/{{data._id}}">
-      <input type="submit"  value="Delete" class="btn btn-primary">
    </form>
 
  </main>
 
-<script src="../public/autoComplete.js"></script>
+<script src="/public/extra.js"></script>
+<script src="/public/autoComplete.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8FReQh61YLuQP68YvmQveuU7dY3LVC9w&libraries=places&callback=initAutoComplete" async defer></script>

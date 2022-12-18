@@ -1,5 +1,5 @@
 
-const loginAndRegRoute = require('./loginAndReg');
+const loginAndRegRoute = require('./loginandreg.js');
 const ownerRoute = require('./owners');
 const studentRoute = require('./students');
 const propertieRoute = require('./properties');
